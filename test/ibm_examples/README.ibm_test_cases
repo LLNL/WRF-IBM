@@ -1,0 +1,120 @@
+Last updated: May-12, 2020
+
+--------------------------------------------------------------------------
+IDEALIZED 3D HILL
+  FILES:
+    * namelist.input.idealized_3d_hill_GP (link this as namelist.input)
+    * namelist.input.idealized_3d_hill_SR (link this as namelist.input)
+    * namelist.input.idealized_3d_hill_VR (link this as namelist.input)
+    * input_sounding_idealized_3d_hill    (link this as input_sounding)
+  DESCRIPTION:
+    * smooth hill centered in the domain
+        * ideal_terrain = 3
+        * hill properties are hard-coded
+            * dyn_em/module_ibm.F/ibm_terrain
+    * single domain
+    * periodic lateral boundary conditions
+    * 50 m horizontal resolution
+    * explicitly defined vertical levels
+        * see z_specified for heights AGL of W-levels
+        * model bottom at -20 m
+        * model top at 2500 m
+        * 10 m vertical resolution near model bottom
+        * 100 m vertical resolution near model top
+        * constant stretching of middle levels
+        * topmost 500 m have W-velocity damping
+    * forced by a west-east geostrophic wind
+    * 3d Smagorinsky LES turbulence closure
+        * coefficient of 0.18
+    * 3 options for IBM algorithm
+        * Ghost Point (GP)
+            * see namelist.input.idealized_3d_hill_GP
+            * ibm_opt = 2
+            * interp_opt = 2
+                * inverse distance weighted interpolation scheme
+        * Velocity Reconstruction (VR)
+            * see namelist.input.idealized_3d_hill_VR
+            * ibm_opt = 3
+            * ibm_eddy = 0 or 1
+                * if 1 then recalculate the velocity 
+            * interp_opt = 2
+                * inverse distance weighted interpolation scheme
+            * vrm_bound_pt_as_neigh = .true.
+                * permits reconstruction points to be nearest neighbors
+            * zero_interior = .false.
+                * whether to zero out velocities within the solid domain
+            * bump_up_recon_pt_within_tol = .true.
+                * when true, if a reconstruction points is within a user
+                  specified tolerance of the immersed boundary, then it
+                  is moved up one vertical level
+            * recon_pt_bump_tol = 0.1
+                * tolerance for bump_up_recon_pt_within_tol = true. This
+                  is defined as a fraction of the height of the cut cell
+        * Shear Reconstruction (SR)
+            * see namelist.input.idealized_3d_hill_SR
+            * ibm_opt = 5
+            * interp_opt = 2
+                * inverse distance weighted interpolation scheme
+            * zero_interior = .false.
+            * delta_ss_recon = 12.0
+                * shear stress reconstruction region. This is the
+                  distance from the immersed boundary that the
+                  interpolation point is placed at
+            * delta_ss_extrap = 11.0
+                * shear stress extrapolation distance. This is the distance,
+                  surface-normal to the immersed boundary, from the ghost
+                  point that extrapolation points are located. There are 3
+                  extrapolation points and they are at 1, 2, and 3 * this
+                  distance from the GP.
+--------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+IDEALIZED OKLAHOMA CITY SIMULATION
+  FILES:
+    * namelist.input.okc (link this as namelist.input)
+    * input_sounding_okc (link this as input_sounding)
+    * okc_bld.nc (IM number LLNL-MI-809877)
+  DESCRIPTION:
+    * two-domain nested setup
+    * d01 is flat
+        * ideal_terrain = 1
+    * d02 reads IB heights from an auxillary input file (okc_bld.nc)
+        * ideal_terrain = 13
+    * d01 uses periodic lateral boundary conditions
+    * d02 uses nested lateral boundary conditions
+        * except the passive tracer, which uses an open boundary condition
+    * horizontal resolutions are 10 and 2 m for d01 and d02, respectively
+    * vertical grid levels are manually specified for both domains
+        * d01 has 5 m vertical resolution near the surface and 10 m aloft
+        * d02 has 1 m vertical resolution near the surface and 4 m aloft
+    * the model top is set to 400 m above the model bottom
+    * the top 40 m of both domains has W-velocity damping
+    * the domains are forced by introducing pressure gradients in x and y
+        * dpx_specified = -0.000125
+        * dpy_specified = -0.000275
+    * d02 includes a passive tracer emitted at a constant rate
+        * chem_opt = 51
+        * is_src = 119, ie_src = 119 (start and end i-index for the source)
+        * js_src = 165, ie_src = 165 (start and end j-index for the source)
+        * ks_src = 8,   ke_src = 9   (start and end k-index for the source)
+        * q_src = 1.0 (strength of the source)
+    * both domains use the 3d constant coefficient Smagorinsky closure
+        * Smagorinsky coefficient, c_s = 0.18
+    * both domains use the VR-IBM algorithm
+        * consant roughness length of 0.1 m
+        * ibm_nn_horz and ibm_nn_vert control the horizontal and vertical
+          extents (in gridpoints) of the search boxes for nearest neighbors.
+          The default (4) is used for d01. Because of the complexities of
+          the urban terrain, d02 uses a larger search box, which improves
+          the code's reliability but hurts performance (execution speed).
+        * zero_interior = .true., so velocities in the solid domain will be
+          set to 0.0 at each time step.
+  NOTES / COMMENTS:
+    * I suggest spinning up turbulence on d01 prior to starting d02.
+    * Turbulence will take a very long time to develop on d01 unless
+      perturbations are introduced. The easiest way to do this is to add
+      roughness features into the IB. I suggest using ideal_terrain=111
+      for the first hour of spinup and ideal_terrain=1 from thereon.
+    * My preference is to keep q_src at 1.0 and scale it in post.
+--------------------------------------------------------------------------

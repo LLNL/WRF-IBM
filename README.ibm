@@ -1,0 +1,19 @@
+# WRF-IBM (The Weather Research and Forecasting model with the immersed boundary method)
+
+This is a version of the WRF model with the immersed boundary method for representing complex terrain.  This version of WRF allows simulation over complex terrain without using a terrain-following coordinate.
+
+## Getting Started
+
+Test cases for flow over an isolated hill and flow within Oklahoma City for the Joint Urban 2003 field campaign are located at test/ibm_examples.
+
+## Authors
+
+Corresponding author: Katherine Lundquist, LLNL, lundquist3@llnl.gov
+Contributing authors: Robert Arthur, Jingyi Bao, Fotini Chow, Jeffrey Mirocha, David Wiersema
+
+## License
+
+This project has been approved for unlimited distribution as LLNL-CODE-813369
+See NOTICE.ibm for disclaimers, notice of U.S. Government Rights and license terms and conditions.
+
+

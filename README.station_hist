@@ -1,0 +1,49 @@
+David Wiersema (wiersema@berkeley.edu or wiersema1@llnl.gov)
+Last Modified: July 1st 2019
+
+README for capability to output at every timestep values of
+unstaggered U, V, W, and PASSIVE values at mass points specified in
+namelist.input.
+
+To use this feature, simply add the variables station_* (i, j, k, id)
+to &domains in namelist.input and enter a comma-separated list of the
+grid indices and grid_id for each point you'd like to save output at.
+
+A file will be created for each grid point to be output. File names
+are 'station***.dat' where *** is simply the list depth of a grid
+point in the namelist station* lists. For example, the first grid
+point from station* in namelist.input will be stored in station001.dat
+
+The maxiumum number of stations that can be entered is controlled by
+the parameter 'max_stations' set in frame/module_driver_constants.F
+
+Each line in the station***.dat files has a timestamp followed by
+destaggered U, V, and W. To add additional variables, simply modify
+the write statement in subroutine station_hist_out of
+share/mediation_integrate.F
+
+MODIFICATIONS:
+* Registry/Registry.EM_COMMON
+    * added station_* variables to namelist.input
+        * station_i	    west-east index
+        * station_j	    south-north index
+        * station_k	    vertical index
+        * station_id	    corresponding grid_id
+* dyn_em/start_em.F
+    * added code to bottom of start_domain_em that opens files for
+      writing later on in subroutine station_hist_out
+* external/esmf_time_f90/Meat.F90
+    * added subroutine fraction_to_long_string
+    * added subroutine fraction_to_long_stringi8
+* frame/module_domain.F
+    * modified subroutine domain_clock_get to optionally output the
+      current time using a new format with more characters included
+      in the numerator and denominator of fractional seconds
+* frame/module_driver_constants.F
+    * added a new paramter (max_stations)
+* main/depend.common
+    * added dependency to share/mediation_integrate.o of
+      ../frame/module_driver_constants.o
+* share/mediation_integrate.F
+    * added subroutine station_hist_out
+    * added call to station_hist_out in med_before_solve_io
