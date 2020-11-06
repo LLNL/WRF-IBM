@@ -16,4 +16,26 @@ Contributing authors: Robert Arthur, Jingyi Bao, Fotini Chow, Jeffrey Mirocha, D
 This project has been approved for unlimited distribution as LLNL-CODE-813369
 See NOTICE.ibm for disclaimers, notice of U.S. Government Rights and license terms and conditions.
 
+## References
+
+Arthur, R.S., K.A. Lundquist, D.J. Wiersema, J. Bao, and F.K. Chow, 2020. Evaluating implementations of the immersed boundary method in the Weather Research and Forecasting model.  Monthly Weather Review, 148, 2087-2109. DOI: 10.1175/MWR-D-19-0219.1
+
+Wiersema, D.J., K.A. Lundquist, and F.K. Chow, 2020. Mesoscale to microscale simulations over complex terrain with the immersed boundary method in the Weather Research and Forecasting model. Monthly Weather Review, 148, 577-595. DOI: 10.1175/MWR-D-19-0071.1
+
+Chow, F.K., C.S. Schär, N. Ban, K.A. Lundquist, L. Schlemmer, and X. Shi, 2019. Crossing multiple gray zones in the transition from mesoscale to microscale simulation over complex terrain.  Atmosphere, 10(5), 274. DOI: 10.3390/atmos10050274
+
+Arthur, R.S., K.A. Lundquist, J.D. Mirocha, and F.K. Chow, 2018. Topographic effects on radiation in the WRF Model with the immersed boundary method: implementation, validation, and application to complex terrain. Monthly Weather Review, 146, 3277-3292. DOI: 10.1175/MWR-D-18-0108.1
+
+Bao, J., F.K. Chow, and K.A. Lundquist, 2018. Large-eddy simulation over complex terrain using an improved immersed boundary method in the Weather Research and Forecasting model. Monthly Weather Review, 146, 2781-2797. DOI: 10.1175/MWR-D-18-0067.1 
+
+Mirocha, J.D., and K.A. Lundquist, 2017. Assessment of vertical mesh refinement in concurrently nested large-eddy simulations using the Weather Research and Forecasting model. Monthly Weather Review, 145, 3025-3048. DOI:10.1175/MWR-D-16-0347.1
+
+Daniels, M.D., K.A. Lundquist, J.D. Mirocha, D.J. Wiersema, and F.K. Chow, 2016. A new vertical grid nesting capability in the Weather Research and Forecasting (WRF) model. Monthly Weather Review, 144(10), 3725- 3747. DOI:10.1175/MWR-D-16-0049.1
+
+Lundquist, K.A., Chow, F.K., and J.K. Lundquist. 2012. An immersed boundary method enabling large-eddy simulations of flow over complex terrain in the WRF model. Monthly Weather Review, 140(12), 3936-3955. DOI: 10.1175/MWR-D-11-00311.1
+
+Lundquist, K.A., Chow, F.K., and J.K. Lundquist, 2010. An immersed boundary method for the Weather Research and Forecasting model. Monthly Weather Review 138(3), 796-817. DOI:10.1175/2009MWR2990.1
+
+
+
 
